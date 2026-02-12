@@ -57,6 +57,7 @@ final class PunchDetector: ObservableObject {
         isDetecting = true
 
         setupHaptics()
+        setupAudioSession()
 
         guard motionManager.isDeviceMotionAvailable else {
             status = "Device motion not available."
@@ -170,6 +171,19 @@ final class PunchDetector: ObservableObject {
             try hapticEngine?.start()
         } catch {
             // If haptics cannot start, we'll fall back later
+        }
+    }
+    
+    private func setupAudioSession() {
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playback, mode: .default, options: [])
+            try session.setActive(true)
+            #if os(iOS)
+            try? session.overrideOutputAudioPort(.speaker)
+            #endif
+        } catch {
+            // Ignore failures
         }
     }
 

@@ -36,6 +36,15 @@ class SpeechRecognizer: ObservableObject {
         
         spokenText = ""
         
+        // Configure audio session for speech recognition
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.record, mode: .measurement, options: [.duckOthers])
+            try session.setActive(true)
+        } catch {
+            print("Audio session setup error:", error)
+        }
+        
         request = SFSpeechAudioBufferRecognitionRequest()
         guard let request = request else { return }
         
@@ -84,6 +93,12 @@ class SpeechRecognizer: ObservableObject {
         silenceTimer?.invalidate()
         silenceTimer = nil
         
+        do {
+            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        } catch {
+            print("Audio session deactivate error:", error)
+        }
+        
         DispatchQueue.main.async {
             self.isRecording = false
         }
@@ -102,3 +117,4 @@ class SpeechRecognizer: ObservableObject {
         stopRecording()
     }
 }
+
