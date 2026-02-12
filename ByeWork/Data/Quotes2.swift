@@ -7,21 +7,16 @@
 
 import Foundation
 
-struct Quote: Identifiable {
-    let id = UUID()
+struct Quote2: Identifiable {
+    let id: Int
     let text: String
 }
 
-struct QuotesData {
-    static let all: [Quote] = [
-        Quote(
-            text: "No matter what happened, it’s great day and I’m glad we got through it"
-        ),
-        Quote(
-            text: "2. No matter what happened, it’s great day and I’m glad we got through it"
-        ),
-        Quote(
-            text: "3. No matter what happened, it’s great day and I’m glad we got through it"
-        )
+struct QuotesData2 {
+    static let all: [Quote2] = [
+        Quote2(id: 0, text: "but its still YOUR day"),
+        Quote2(id: 1, text: "you can do is rest"),
+        Quote2(id: 2, text: "let's leave it for tomorrow"),
+        Quote2(id: 3, text: "Home is ready for you")
     ]
 }

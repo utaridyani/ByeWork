@@ -15,13 +15,16 @@ struct SpeakInstruction: Identifiable {
 struct SpeakInstructionData {
     static let all: [SpeakInstruction] = [
         SpeakInstruction(
-            text: "Good Morning"
+            text: "Good job"
         ),
         SpeakInstruction(
-            text: "Good Afternoon"
+            text: "Great job"
         ),
         SpeakInstruction(
-            text: "Good Night"
+            text: "Thank you"
+        ),
+        SpeakInstruction(
+            text: "See you"
         )
     ]
 }

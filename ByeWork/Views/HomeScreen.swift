@@ -18,6 +18,7 @@ struct HomeScreen: View {
     @StateObject private var speech = SpeechRecognizer()
     @State private var nextScreen: Bool = false
     @State private var randomQuote: Quote = QuotesData.all.randomElement()!
+    @State private var randomQuote2: [Quote2] = QuotesData2.all
     @State private var randomSpeakInstruction: SpeakInstruction = SpeakInstructionData.all.randomElement()!
     
     var speakInstruction: String {
@@ -37,7 +38,7 @@ struct HomeScreen: View {
                                 .frame(width: 470, height: 210)
                             
                             VStack(spacing: 0) {
-                                Text(showAltText ? "Lets say" : "Today might be long,")
+                                Text(showAltText ? "Lets say" : randomQuote.text)
                                     .font(.system(size: 24, weight: .light))
                                     .foregroundColor(.white)
                                     .animation(nil, value: showAltText)   // prevent text swap animation
@@ -46,7 +47,7 @@ struct HomeScreen: View {
                                     Text(randomSpeakInstruction.text)
                                         .opacity(showAltText ? 1 : 0)
                                     
-                                    Text("but its still YOUR day")
+                                    Text(randomQuote2[randomQuote.id].text)
                                         .opacity(showAltText ? 0 : 1)
                                 }
                                 .font(.system(size: 28, weight: .bold))

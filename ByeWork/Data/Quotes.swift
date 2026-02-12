@@ -8,20 +8,15 @@
 import Foundation
 
 struct Quote: Identifiable {
-    let id = UUID()
+    let id: Int
     let text: String
 }
 
 struct QuotesData {
     static let all: [Quote] = [
-        Quote(
-            text: "No matter what happened, it’s great day and I’m glad we got through it"
-        ),
-        Quote(
-            text: "2. No matter what happened, it’s great day and I’m glad we got through it"
-        ),
-        Quote(
-            text: "3. No matter what happened, it’s great day and I’m glad we got through it"
-        )
+        Quote(id: 0, text: "Today might be long,"),
+        Quote(id: 1, text: "Some days are heavy,"),
+        Quote(id: 2, text: "It’s okay to pause,"),
+        Quote(id: 3, text: "Work is done for today,")
     ]
 }
