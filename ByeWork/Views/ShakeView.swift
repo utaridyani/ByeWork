@@ -13,7 +13,7 @@ final class PunchDetector: ObservableObject {
     @Published var status: String = "waiting"
     @Published var flashTrigger: Int = 0
     @Published var punchCount: Int = 0
-    let maxPunches: Int = 7
+    let maxPunches: Int = 4
     
 
     private let motionManager = CMMotionManager()
@@ -98,7 +98,6 @@ final class PunchDetector: ObservableObject {
     }
 
     private func punchDetected(at now: Date) {
-        playTapSound()
         
         // If we have a previous punch, ensure we're still within the pairing window; otherwise reset count
         if let first = lastPunchTime {
@@ -122,16 +121,10 @@ final class PunchDetector: ObservableObject {
         status = "Punch \(punchCount) of \(maxPunches)"
         
         if punchCount == 1 {
-            playTapSound()
-        } else if punchCount == 2 {
-            playTapSound()
-        } else if punchCount == 3 {
-            playTapSound()
-        } else if punchCount == 4 {
             playPhaserDown1Sound()
-        } else if punchCount == 5 {
+        } else if punchCount == 2 {
             playPhaserDown2Sound()
-        } else if punchCount == 6 {
+        } else if punchCount == 3 {
             playPhaserDown3Sound()
         }
 
