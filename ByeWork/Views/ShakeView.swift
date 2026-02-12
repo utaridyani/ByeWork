@@ -320,7 +320,7 @@ struct ShakeView: View {
                                 .font(.system(size: 24, weight: .light))
                                 .foregroundColor(.white)
 
-                            Text("“Raise your phone\nand shake it!”")
+                            Text("Raise your phone\nand shake it!")
                                 .font(.system(size: 28, weight: .bold))
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.center)

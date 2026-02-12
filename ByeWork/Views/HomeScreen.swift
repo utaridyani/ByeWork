@@ -67,7 +67,7 @@ struct HomeScreen: View {
                             .offset(y: -16)
                         }
                         .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
                                 // 1) swap text instantly (no animation)
                                 showAltText = true
                                 
