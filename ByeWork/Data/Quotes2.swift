@@ -16,7 +16,7 @@ struct QuotesData2 {
     static let all: [Quote2] = [
         Quote2(id: 0, text: "but its still YOUR day"),
         Quote2(id: 1, text: "you can do is rest"),
-        Quote2(id: 2, text: "let's leave it for tomorrow"),
+        Quote2(id: 2, text: "leave it for tomorrow"),
         Quote2(id: 3, text: "Home is ready for you")
     ]
 }
