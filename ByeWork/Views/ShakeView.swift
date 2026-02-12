@@ -207,7 +207,7 @@ final class PunchDetector: ObservableObject {
     }
 
     private func playPhaserDown1Sound() {
-        guard let url = Bundle.main.url(forResource: "phaserDown1", withExtension: "mp3") else { return }
+        guard let url = Bundle.main.url(forResource: "phaserDown1", withExtension: "m4a") else { return }
         do {
             tapPlayer = try AVAudioPlayer(contentsOf: url)
             tapPlayer?.prepareToPlay()
@@ -218,7 +218,7 @@ final class PunchDetector: ObservableObject {
     }
     
     private func playPhaserDown2Sound() {
-        guard let url = Bundle.main.url(forResource: "phaserDown2", withExtension: "mp3") else { return }
+        guard let url = Bundle.main.url(forResource: "phaserDown2", withExtension: "m4a") else { return }
         do {
             tapPlayer = try AVAudioPlayer(contentsOf: url)
             tapPlayer?.prepareToPlay()
@@ -229,7 +229,7 @@ final class PunchDetector: ObservableObject {
     }
     
     private func playPhaserDown3Sound() {
-        guard let url = Bundle.main.url(forResource: "phaserDown3", withExtension: "mp3") else { return }
+        guard let url = Bundle.main.url(forResource: "phaserDown3", withExtension: "m4a") else { return }
         do {
             tapPlayer = try AVAudioPlayer(contentsOf: url)
             tapPlayer?.prepareToPlay()
