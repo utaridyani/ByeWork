@@ -40,6 +40,9 @@
 		724939662F3D71B700D37DC2 /* Exceptions for "ByeWork" folder in "ByeWorkTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Sound/phaserDown1.mp3,
+				Sound/phaserDown2.mp3,
+				Sound/phaserDown3.mp3,
 				Sound/tap.wav,
 				Sound/win.wav,
 				"Views/Screen2View 2.swift",
@@ -50,6 +53,9 @@
 		724939672F3D71B700D37DC2 /* Exceptions for "ByeWork" folder in "ByeWorkUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Sound/phaserDown1.mp3,
+				Sound/phaserDown2.mp3,
+				Sound/phaserDown3.mp3,
 				Sound/tap.wav,
 				Sound/win.wav,
 				"Views/Screen2View 2.swift",

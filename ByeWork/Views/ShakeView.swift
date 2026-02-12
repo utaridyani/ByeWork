@@ -12,6 +12,8 @@ final class PunchDetector: ObservableObject {
     
     @Published var status: String = "waiting"
     @Published var flashTrigger: Int = 0
+    @Published var punchCount: Int = 0
+    let maxPunches: Int = 4
     
 
     private let motionManager = CMMotionManager()
@@ -43,9 +45,10 @@ final class PunchDetector: ObservableObject {
     private var cooldownUntil: Date?
 
     func start() {
-        status = "Listening for two punches…"
+        status = "Listening for five punches…"
         wasBelow = true
         lastPunchTime = nil
+        punchCount = 0
         resetTimer?.invalidate(); resetTimer = nil
         pulseTimer?.invalidate(); pulseTimer = nil
         isDetecting = true
@@ -91,29 +94,48 @@ final class PunchDetector: ObservableObject {
     }
 
     private func punchDetected(at now: Date) {
-        playTapSound()
+        // If we have a previous punch, ensure we're still within the pairing window; otherwise reset count
         if let first = lastPunchTime {
-            if now.timeIntervalSince(first) <= pairingWindow {
-                status = "Double punch detected! Vibrating…"
+            if now.timeIntervalSince(first) > pairingWindow {
+                // Window expired – start a new sequence
+                punchCount = 0
                 lastPunchTime = nil
                 resetTimer?.invalidate(); resetTimer = nil
-                playWinSound()
-                // Notify the view to start a 2-second flash effect
-                flashTrigger += 1
-                // Stop detecting further punches immediately, but allow vibration/sound to continue
-                isDetecting = false
-                motionManager.stopDeviceMotionUpdates()
-                vibrateForTwoSeconds()
-            } else {
-                // Too slow; treat as new first punch
-                lastPunchTime = now
-                status = "Punch 1 detected (previous expired)"
-                scheduleReset()
             }
-        } else {
-            lastPunchTime = now
-            status = "Punch 1 detected"
-            scheduleReset()
+        }
+
+        // Count this punch
+        punchCount += 1
+
+        // Set/refresh the window start time and reset timer
+        lastPunchTime = now
+        scheduleReset()
+
+        // Update status with progress
+        status = "Punch \(punchCount) of \(maxPunches)"
+        
+        if punchCount == 1 {
+            playPhaserDown1Sound()
+        } else if punchCount == 2 {
+            playPhaserDown2Sound()
+        } else if punchCount == 3 {
+            playPhaserDown3Sound()
+        }
+
+        // If we reached the target, trigger win behavior
+        if punchCount >= maxPunches {
+            status = "Combo detected! Vibrating…"
+            // Clear sequence state
+            punchCount = 0
+            lastPunchTime = nil
+            resetTimer?.invalidate(); resetTimer = nil
+
+            // Play win, flash, stop detecting, and vibrate just like before
+            playWinSound()
+            flashTrigger += 1
+            isDetecting = false
+            motionManager.stopDeviceMotionUpdates()
+            vibrateForTwoSeconds()
         }
     }
 
@@ -123,6 +145,7 @@ final class PunchDetector: ObservableObject {
             guard let self = self else { return }
             if self.lastPunchTime != nil {
                 self.lastPunchTime = nil
+                self.punchCount = 0
                 self.status = "Timeout. Listening…"
             }
         }
@@ -174,6 +197,39 @@ final class PunchDetector: ObservableObject {
 
     private func playTapSound() {
         guard let url = Bundle.main.url(forResource: "tap", withExtension: "wav") else { return }
+        do {
+            tapPlayer = try AVAudioPlayer(contentsOf: url)
+            tapPlayer?.prepareToPlay()
+            tapPlayer?.play()
+        } catch {
+            // If playback fails, ignore
+        }
+    }
+
+    private func playPhaserDown1Sound() {
+        guard let url = Bundle.main.url(forResource: "phaserDown1", withExtension: "mp3") else { return }
+        do {
+            tapPlayer = try AVAudioPlayer(contentsOf: url)
+            tapPlayer?.prepareToPlay()
+            tapPlayer?.play()
+        } catch {
+            // If playback fails, ignore
+        }
+    }
+    
+    private func playPhaserDown2Sound() {
+        guard let url = Bundle.main.url(forResource: "phaserDown2", withExtension: "mp3") else { return }
+        do {
+            tapPlayer = try AVAudioPlayer(contentsOf: url)
+            tapPlayer?.prepareToPlay()
+            tapPlayer?.play()
+        } catch {
+            // If playback fails, ignore
+        }
+    }
+    
+    private func playPhaserDown3Sound() {
+        guard let url = Bundle.main.url(forResource: "phaserDown3", withExtension: "mp3") else { return }
         do {
             tapPlayer = try AVAudioPlayer(contentsOf: url)
             tapPlayer?.prepareToPlay()
